@@ -15,6 +15,7 @@ using Microsoft.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Linq;
+using System.Windows.Threading;
 
 namespace CodeTopo
 {
@@ -34,6 +35,7 @@ namespace CodeTopo
         private bool isDisposed;
 
         private IWpfTextView myTextView;
+        private DispatcherTimer typingTimer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassTopo"/> class for a given <paramref name="textView"/>.
@@ -47,6 +49,33 @@ namespace CodeTopo
             this.ClipToBounds = true;
             this.Background = new SolidColorBrush(Colors.Black);
 
+            myTextView.TextBuffer.Changed += HandleTextBufferChanged;
+
+            DrawMap();
+
+        }
+
+        private void HandleTextBufferChanged(object sender, EventArgs e)
+        {
+            if (typingTimer == null)
+            {
+                typingTimer = new DispatcherTimer();
+                typingTimer.Interval = TimeSpan.FromMilliseconds(500);
+                typingTimer.Tick += TypingTimer_Tick;
+            }
+
+            typingTimer.Stop();
+            typingTimer.Start();
+        }
+
+        private void TypingTimer_Tick(object sender, EventArgs e)
+        {
+            DrawMap();
+        }
+
+        public void DrawMap()
+        {
+            this.Children.Clear();
             var stack = new StackPanel()
             {
                 Orientation = Orientation.Vertical
@@ -66,6 +95,7 @@ namespace CodeTopo
             }
             this.Children.Add(stack);
         }
+        
 
         private List<string> GetList()
         {
@@ -90,6 +120,7 @@ namespace CodeTopo
 
             return list;
         }
+
 
         #region IWpfTextViewMargin
 
