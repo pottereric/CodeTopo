@@ -16,6 +16,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Linq;
 using System.Windows.Threading;
+using CodeTopo.Analyzer;
 
 namespace CodeTopo
 {
@@ -81,25 +82,38 @@ namespace CodeTopo
                 Orientation = Orientation.Vertical
             };
 
-            List<string> list = GetList();
+            var list = GetList();
 
             foreach (var item in list)
             {
                 var label = new Label
                 {
                     Background = new SolidColorBrush(Colors.Black),
-                    Foreground = new SolidColorBrush(Colors.Red),
-                    Content = item
+                    Content = item.Name
                 };
+
+                switch(item.Modifier)
+                {
+                    case AccessModifier.AccessPublic:
+                        label.Foreground = new SolidColorBrush(Colors.Green);
+                        break;
+                    case AccessModifier.AccessProtected:
+                        label.Foreground = new SolidColorBrush(Colors.Blue);
+                        break;
+                    case AccessModifier.AccessPrivate:
+                        label.Foreground = new SolidColorBrush(Colors.Red);
+                        break;
+                }
+
                 stack.Children.Add(label);
             }
             this.Children.Add(stack);
         }
         
 
-        private List<string> GetList()
+        private List<FunctionInfo> GetList()
         {
-            var list = new List<string>();
+            var list = new List<FunctionInfo>();
 
             var snapshot = myTextView.TextBuffer.CurrentSnapshot;
 
@@ -109,13 +123,8 @@ namespace CodeTopo
             {
                 //    // Get the SyntaxTree and SemanticModel corresponding to the Document.
                 var activeSyntaxTree = document.GetSyntaxTreeAsync().Result;
-                var foo = activeSyntaxTree.GetRoot().DescendantNodes().OfType<MethodDeclarationSyntax>();
-
-                foreach (var bar in foo)
-                {
-                    list.Add(bar.Identifier.ToString());
-                }
-                //    var activeSemanticModel = document.GetSemanticModelAsync().Result;
+                var foo = new GetMethodInfo();
+                list = foo.Get(activeSyntaxTree);
             }
 
             return list;

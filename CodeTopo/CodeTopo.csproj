@@ -45,6 +45,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Analyzer\FunctionInfo.cs" />
+    <Compile Include="Analyzer\GetMethodInfo.cs" />
     <Compile Include="ClassTopo.cs" />
     <Compile Include="ClassTopoFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
