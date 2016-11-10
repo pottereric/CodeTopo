@@ -43,9 +43,9 @@ namespace CodeTopo
         {
             myTextView = textView;
             //this.Height = 20; // Margin height sufficient to have the label
-            this.Width = 20;
+            this.Width = 200;
             this.ClipToBounds = true;
-            this.Background = new SolidColorBrush(Colors.LightGreen);
+            this.Background = new SolidColorBrush(Colors.Black);
 
             var stack = new StackPanel()
             {
@@ -58,7 +58,7 @@ namespace CodeTopo
             {
                 var label = new Label
                 {
-                    Background = new SolidColorBrush(Colors.LightGreen),
+                    Background = new SolidColorBrush(Colors.Black),
                     Foreground = new SolidColorBrush(Colors.Red),
                     Content = item
                 };
