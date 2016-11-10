@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.VisualStudio.Text.Editor;
+using System.Collections.Generic;
 
 namespace CodeTopo
 {
@@ -43,32 +44,29 @@ namespace CodeTopo
                 Orientation = Orientation.Vertical
             };
 
-            // Add a green colored label that says "Hello ClassTopo"
-            var label = new Label
-            {
-                Background = new SolidColorBrush(Colors.LightGreen),
-                Foreground = new SolidColorBrush(Colors.Red),
-                Content = "one",
-            };
-            stack.Children.Add(label);
+            List<string> list = GetList();
 
-            var label1 = new Label
+            foreach (var item in list)
             {
-                Background = new SolidColorBrush(Colors.LightGreen),
-                Foreground = new SolidColorBrush(Colors.White),
-                Content = "two",
-            };
-            stack.Children.Add(label1);
-
-            var label2 = new Label
-            {
-                Background = new SolidColorBrush(Colors.LightGreen),
-                Foreground = new SolidColorBrush(Colors.Blue),
-                Content = "three",
-            };
-            stack.Children.Add(label2);
-
+                var label = new Label
+                {
+                    Background = new SolidColorBrush(Colors.LightGreen),
+                    Foreground = new SolidColorBrush(Colors.Red),
+                    Content = item
+                };
+                stack.Children.Add(label);
+            }
             this.Children.Add(stack);
+        }
+
+        private static List<string> GetList()
+        {
+            var list = new List<string>();
+            list.Add("one");
+            list.Add("two");
+            list.Add("three");
+            list.Add("four");
+            return list;
         }
 
         #region IWpfTextViewMargin
