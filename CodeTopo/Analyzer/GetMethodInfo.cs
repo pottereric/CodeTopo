@@ -17,20 +17,22 @@ namespace CodeTopo.Analyzer
 
             var list = new List<FunctionInfo>();
 
-            foreach (var bar in methods)
+            foreach (var method in methods)
             {
                 var modifier = AccessModifier.AccessPrivate;
 
-                if (bar.Modifiers.Any(m => m.IsKind(SyntaxKind.PublicKeyword)))
+                if (method.Modifiers.Any(m => m.IsKind(SyntaxKind.PublicKeyword)))
                 {
                     modifier = AccessModifier.AccessPublic;
                 }
-                else if (bar.Modifiers.Any(m => m.IsKind(SyntaxKind.ProtectedKeyword)))
+                else if (method.Modifiers.Any(m => m.IsKind(SyntaxKind.ProtectedKeyword)))
                 {
                     modifier = AccessModifier.AccessProtected;
                 }
 
-                list.Add(new FunctionInfo() { Name = bar.Identifier.ToString(), Modifier = modifier });
+                int nesting = method.DescendantNodes().OfType<BlockSyntax>().Count();
+
+                list.Add(new FunctionInfo() { Name = method.Identifier.ToString(), Modifier = modifier, NestingLevel = nesting });
             }
             //    var activeSemanticModel = document.GetSemanticModelAsync().Result;
 
