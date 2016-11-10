@@ -10,6 +10,11 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.VisualStudio.Text.Editor;
 using System.Collections.Generic;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Linq;
 
 namespace CodeTopo
 {
@@ -28,12 +33,15 @@ namespace CodeTopo
         /// </summary>
         private bool isDisposed;
 
+        private IWpfTextView myTextView;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassTopo"/> class for a given <paramref name="textView"/>.
         /// </summary>
         /// <param name="textView">The <see cref="IWpfTextView"/> to attach the margin to.</param>
         public ClassTopo(IWpfTextView textView)
         {
+            myTextView = textView;
             //this.Height = 20; // Margin height sufficient to have the label
             this.Width = 20;
             this.ClipToBounds = true;
@@ -59,13 +67,27 @@ namespace CodeTopo
             this.Children.Add(stack);
         }
 
-        private static List<string> GetList()
+        private List<string> GetList()
         {
             var list = new List<string>();
-            list.Add("one");
-            list.Add("two");
-            list.Add("three");
-            list.Add("four");
+
+            var snapshot = myTextView.TextBuffer.CurrentSnapshot;
+
+            //// Get the Document corresponding to the currently active text snapshot.
+            var document = snapshot.GetOpenDocumentInCurrentContextWithChanges();
+            if (document != null)
+            {
+                //    // Get the SyntaxTree and SemanticModel corresponding to the Document.
+                var activeSyntaxTree = document.GetSyntaxTreeAsync().Result;
+                var foo = activeSyntaxTree.GetRoot().DescendantNodes().OfType<MethodDeclarationSyntax>();
+
+                foreach (var bar in foo)
+                {
+                    list.Add(bar.Identifier.ToString());
+                }
+                //    var activeSemanticModel = document.GetSemanticModelAsync().Result;
+            }
+
             return list;
         }
 

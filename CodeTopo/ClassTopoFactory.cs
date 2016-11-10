@@ -19,10 +19,16 @@ namespace CodeTopo
     [MarginContainer(PredefinedMarginNames.Right)]             // Set the container to the bottom of the editor window
     //[Order(After = PredefinedMarginNames.Spacer, Before = PredefinedMarginNames.Outlining)]
     //[MarginContainer(PredefinedMarginNames.LeftSelection)]
-    [ContentType("text")]                                       // Show this margin for all text-based types
+    [ContentType("CSharp")]                                       // Show this margin for all text-based types
     [TextViewRole(PredefinedTextViewRoles.Interactive)]
     internal sealed class ClassTopoFactory : IWpfTextViewMarginProvider
     {
+        //[ImportingConstructor]
+        //public ClassTopoFactory(IContentTypeRegistryService contentTypeRegistryService)
+        //{
+        //    this.csharpContentType = contentTypeRegistryService.GetContentType("CSharp");
+
+        //}
         #region IWpfTextViewMarginProvider
 
         /// <summary>
