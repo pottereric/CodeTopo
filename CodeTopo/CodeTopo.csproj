@@ -49,6 +49,7 @@
     <Compile Include="Analyzer\GetMethodInfo.cs" />
     <Compile Include="ClassTopo.cs" />
     <Compile Include="ClassTopoFactory.cs" />
+    <Compile Include="Drawing\Painter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

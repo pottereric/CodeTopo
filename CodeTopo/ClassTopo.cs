@@ -17,6 +17,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Linq;
 using System.Windows.Threading;
 using CodeTopo.Analyzer;
+using CodeTopo.Drawing;
 
 namespace CodeTopo
 {
@@ -53,7 +54,6 @@ namespace CodeTopo
             myTextView.TextBuffer.Changed += HandleTextBufferChanged;
 
             DrawMap();
-
         }
 
         private void HandleTextBufferChanged(object sender, EventArgs e)
@@ -77,37 +77,40 @@ namespace CodeTopo
         public void DrawMap()
         {
             this.Children.Clear();
-            var stack = new StackPanel()
-            {
-                Orientation = Orientation.Vertical
-            };
 
-            var list = GetList();
+            var painter = new Painter();
+            this.Children.Add(painter.Paint(GetList()));
+            //var stack = new StackPanel()
+            //{
+            //    Orientation = Orientation.Vertical
+            //};
 
-            foreach (var item in list)
-            {
-                var label = new Label
-                {
-                    Background = new SolidColorBrush(Colors.Black),
-                    Content = item.Name
-                };
+            //var list = GetList();
 
-                switch(item.Modifier)
-                {
-                    case AccessModifier.AccessPublic:
-                        label.Foreground = new SolidColorBrush(Colors.Green);
-                        break;
-                    case AccessModifier.AccessProtected:
-                        label.Foreground = new SolidColorBrush(Colors.Blue);
-                        break;
-                    case AccessModifier.AccessPrivate:
-                        label.Foreground = new SolidColorBrush(Colors.Red);
-                        break;
-                }
+            //foreach (var item in list)
+            //{
+            //    var label = new Label
+            //    {
+            //        Background = new SolidColorBrush(Colors.Black),
+            //        Content = item.Name
+            //    };
 
-                stack.Children.Add(label);
-            }
-            this.Children.Add(stack);
+            //    switch(item.Modifier)
+            //    {
+            //        case AccessModifier.AccessPublic:
+            //            label.Foreground = new SolidColorBrush(Colors.Green);
+            //            break;
+            //        case AccessModifier.AccessProtected:
+            //            label.Foreground = new SolidColorBrush(Colors.Blue);
+            //            break;
+            //        case AccessModifier.AccessPrivate:
+            //            label.Foreground = new SolidColorBrush(Colors.Red);
+            //            break;
+            //    }
+
+            //    stack.Children.Add(label);
+            //}
+            //this.Children.Add(stack);
         }
         
 

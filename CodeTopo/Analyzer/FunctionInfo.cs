@@ -20,5 +20,9 @@ namespace CodeTopo.Analyzer
         public AccessModifier Modifier { get; set; }
 
         public int NestingLevel { get; set; }
+
+        public int Top { get; set; }
+
+        public int Bottom { get; set; }
     }
 }
