@@ -4,20 +4,16 @@
 // </copyright>
 //------------------------------------------------------------------------------
 
+using CodeTopo.Analyzer;
+using CodeTopo.Drawing;
+using Microsoft.CodeAnalysis.Text;
+using Microsoft.VisualStudio.Text.Editor;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Microsoft.VisualStudio.Text.Editor;
-using System.Collections.Generic;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Linq;
 using System.Windows.Threading;
-using CodeTopo.Analyzer;
-using CodeTopo.Drawing;
 
 namespace CodeTopo
 {
@@ -46,7 +42,6 @@ namespace CodeTopo
         public ClassTopo(IWpfTextView textView)
         {
             myTextView = textView;
-            //this.Height = 20; // Margin height sufficient to have the label
             this.Width = 200;
             this.ClipToBounds = true;
             this.Background = new SolidColorBrush(Colors.Black);
@@ -80,39 +75,7 @@ namespace CodeTopo
 
             var painter = new Painter();
             this.Children.Add(painter.Paint(GetList()));
-            //var stack = new StackPanel()
-            //{
-            //    Orientation = Orientation.Vertical
-            //};
-
-            //var list = GetList();
-
-            //foreach (var item in list)
-            //{
-            //    var label = new Label
-            //    {
-            //        Background = new SolidColorBrush(Colors.Black),
-            //        Content = item.Name
-            //    };
-
-            //    switch(item.Modifier)
-            //    {
-            //        case AccessModifier.AccessPublic:
-            //            label.Foreground = new SolidColorBrush(Colors.Green);
-            //            break;
-            //        case AccessModifier.AccessProtected:
-            //            label.Foreground = new SolidColorBrush(Colors.Blue);
-            //            break;
-            //        case AccessModifier.AccessPrivate:
-            //            label.Foreground = new SolidColorBrush(Colors.Red);
-            //            break;
-            //    }
-
-            //    stack.Children.Add(label);
-            //}
-            //this.Children.Add(stack);
         }
-        
 
         private List<FunctionInfo> GetList()
         {
@@ -133,7 +96,6 @@ namespace CodeTopo
             return list;
         }
 
-
         #region IWpfTextViewMargin
 
         /// <summary>
@@ -151,7 +113,7 @@ namespace CodeTopo
             }
         }
 
-        #endregion
+        #endregion IWpfTextViewMargin
 
         #region ITextViewMargin
 
@@ -173,8 +135,6 @@ namespace CodeTopo
 
                 // Since this is a horizontal margin, its width will be bound to the width of the text view.
                 // Therefore, its size is its height.
-                //return this.ActualHeight;
-                //return this.ActualWidth;
                 return 200;
             }
         }
@@ -221,7 +181,7 @@ namespace CodeTopo
             }
         }
 
-        #endregion
+        #endregion ITextViewMargin
 
         /// <summary>
         /// Checks and throws <see cref="ObjectDisposedException"/> if the object is disposed.

@@ -1,11 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CodeTopo.Analyzer
 {
@@ -36,9 +33,7 @@ namespace CodeTopo.Analyzer
                 int eolCount = method.DescendantTrivia().Count(n => n.Kind() == SyntaxKind.EndOfLineTrivia);
                 funcInfo.Lines = eolCount;
 
-
                 list.Add(funcInfo);
-
             }
             //    var activeSemanticModel = document.GetSemanticModelAsync().Result;
 

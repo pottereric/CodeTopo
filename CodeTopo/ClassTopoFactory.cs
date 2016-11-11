@@ -4,9 +4,9 @@
 // </copyright>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.Composition;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
+using System.ComponentModel.Composition;
 
 namespace CodeTopo
 {
@@ -29,6 +29,7 @@ namespace CodeTopo
         //    this.csharpContentType = contentTypeRegistryService.GetContentType("CSharp");
 
         //}
+
         #region IWpfTextViewMarginProvider
 
         /// <summary>
@@ -44,6 +45,6 @@ namespace CodeTopo
             return new ClassTopo(wpfTextViewHost.TextView);
         }
 
-        #endregion
+        #endregion IWpfTextViewMarginProvider
     }
 }

@@ -1,9 +1,5 @@
 ﻿using CodeTopo.Analyzer;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -21,7 +17,8 @@ namespace CodeTopo.Drawing
                 System.Windows.Shapes.Rectangle rect;
                 rect = new System.Windows.Shapes.Rectangle();
                 rect.Stroke = new SolidColorBrush(Colors.White);
-                rect.Fill = new SolidColorBrush(GetColorForModifier(item.Modifier));
+                rect.Fill = new SolidColorBrush(
+                    GetColorForModifier(item.Modifier));
                 rect.Width = item.NestingLevel * 5;
                 rect.Height = item.Lines * 2;
 
@@ -45,6 +42,7 @@ namespace CodeTopo.Drawing
                 case AccessModifier.AccessPublic:
                     color = Colors.Green;
                     break;
+
                 case AccessModifier.AccessProtected:
                     color = Colors.Blue;
                     break;
