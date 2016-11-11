@@ -21,8 +21,6 @@ namespace CodeTopo.Analyzer
 
         public int NestingLevel { get; set; }
 
-        public int Top { get; set; }
-
-        public int Bottom { get; set; }
+        public int Lines { get; set; }
     }
 }

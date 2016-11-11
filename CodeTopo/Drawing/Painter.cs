@@ -14,7 +14,7 @@ namespace CodeTopo.Drawing
         public Canvas Paint(List<FunctionInfo> list)
         {
             var canvas = new Canvas();
-            int i = 0;
+            int verticalPosition = 5;
 
             foreach (var item in list)
             {
@@ -22,11 +22,14 @@ namespace CodeTopo.Drawing
                 rect = new System.Windows.Shapes.Rectangle();
                 rect.Stroke = new SolidColorBrush(Colors.White);
                 rect.Fill = new SolidColorBrush(GetColorForModifier(item.Modifier));
-                rect.Width = item.NestingLevel * 10;
-                rect.Height = 10;
+                rect.Width = item.NestingLevel * 5;
+                rect.Height = item.Lines * 2;
+
                 Canvas.SetLeft(rect, 10);
-                Canvas.SetTop(rect, 10 + i);
-                i += 20;
+                Canvas.SetTop(rect, verticalPosition);
+
+                verticalPosition += (int)rect.Height + 10;
+
                 rect.ToolTip = item.Name;
                 canvas.Children.Add(rect);
             }

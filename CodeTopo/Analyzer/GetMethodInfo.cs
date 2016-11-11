@@ -19,6 +19,7 @@ namespace CodeTopo.Analyzer
 
             foreach (var method in methods)
             {
+                var funcInfo = new FunctionInfo() { Name = method.Identifier.ToString() };
                 var modifier = AccessModifier.AccessPrivate;
 
                 if (method.Modifiers.Any(m => m.IsKind(SyntaxKind.PublicKeyword)))
@@ -29,10 +30,15 @@ namespace CodeTopo.Analyzer
                 {
                     modifier = AccessModifier.AccessProtected;
                 }
+                funcInfo.Modifier = modifier;
+                funcInfo.NestingLevel = method.DescendantNodes().OfType<BlockSyntax>().Count();
 
-                int nesting = method.DescendantNodes().OfType<BlockSyntax>().Count();
+                int eolCount = method.DescendantTrivia().Count(n => n.Kind() == SyntaxKind.EndOfLineTrivia);
+                funcInfo.Lines = eolCount;
 
-                list.Add(new FunctionInfo() { Name = method.Identifier.ToString(), Modifier = modifier, NestingLevel = nesting });
+
+                list.Add(funcInfo);
+
             }
             //    var activeSemanticModel = document.GetSemanticModelAsync().Result;
 
